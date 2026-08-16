@@ -1,5 +1,13 @@
 # Agent Guidelines for al-folio (v1.x)
 
+> **This repo is a personal site built _from_ al-folio, not the al-folio starter itself.** Three upstream rules below therefore do not apply here:
+>
+> 1. **Local overrides are legal and intentional.** `_sass/_variables.scss` and `_sass/_themes.scss` are verbatim copies of `al_folio_core` files with a few flagged lines changed, carrying the Tiffany-blue palette. See [local overrides](docs/ARCHITECTURE.md#local-overrides-your-site-vs-this-repo).
+> 2. **The style contract is gone.** `test/` and `npm run lint:style-contract` were removed — they exist to police contributions to upstream al-folio and fail on any legal user-site override.
+> 3. **The baseurl is empty, not `/al-folio`.** This is a user page at `https://ttdne.github.io`, so `_config.yml` sets `baseurl: ""` and the dev server is at `http://localhost:4000/`. Everything below that says `/al-folio` is upstream's setup, not ours.
+>
+> Content lives in `_pages`, `_data/cv.yml`, `_bibliography/papers.bib`, `_news`, `_projects`, `_posts`. Runtime still lives in the gems — the routing table below is still correct about that.
+
 **This file is the authoritative entry point for coding agents working in this repo.** Read it before making any change. It is intentionally short and tool-neutral; it links to the one place each longer-form fact lives.
 
 `al-folio` v1.x is a **thin Jekyll starter, not a theme**. This repo owns starter wiring, example content, docs, and cross-plugin tests. All runtime — layouts, includes, Sass, Liquid tags, filters, feature JS — lives in versioned gems published under [`al-org-dev`](https://github.com/al-org-dev).

@@ -2,16 +2,13 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: AI Engineer at <a href="https://viettelcybersecurity.com/">Viettel Cyber Security</a>. Looking for Ms/PhD-combined position in the near Spring/Fall Semester 2027!
 
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: false # false = square frame with rounded corners; true crops the image to a circle
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -27,8 +24,37 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](https://www.reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am an AI Engineer at **Viettel Cyber Security** and a research member of the **BKAI NLP Lab** at Hanoi University of Science and Technology, advised by Assoc. Prof. Le Thanh Huong. I will complete my B.Sc. in Information Technology at HUST in 2026.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My work so far has run along two threads. In academia, I have worked mostly on machine translation for low-resource languages. In industry, I have built AI agents for a security platform — designing agent architectures at one end, training small language models for narrow tasks at the other.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+A third interest has grown out of both: how humans and AI systems actually interact, and how much of that turns on language. I want to pursue it across disciplines, particularly computational sociolinguistics and HCI.
+
+Outside work, I read, travel, practice yoga, and spend a good deal of time exploring Eastern astrology (tử vi).
+
+## languages
+{: .section-title-bold}
+
+<!-- Same markup as the news section (see news.liquid in al_folio_core): a
+     borderless two-column table with a 20% label column. Reusing it keeps this
+     block visually identical to "news" below without a separate page. -->
+<div class="languages">
+  <table class="table table-sm table-borderless">
+    <tr>
+      <th scope="row" style="width: 20%">Vietnamese</th>
+      <td>Native speaker</td>
+    </tr>
+    <tr>
+      <th scope="row" style="width: 20%">English</th>
+      <td>Professional working proficiency — I study and do my research in English</td>
+    </tr>
+    <tr>
+      <th scope="row" style="width: 20%">Japanese</th>
+      <td>JLPT N4 — I can follow everyday conversation when it is spoken slowly</td>
+    </tr>
+    <tr>
+      <th scope="row" style="width: 20%">Korean</th>
+      <td>I love Korean, and I study a little of it every day</td>
+    </tr>
+  </table>
+</div>

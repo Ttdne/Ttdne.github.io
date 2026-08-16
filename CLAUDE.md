@@ -12,13 +12,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 bundle install                                # ruby gems
-bundle exec jekyll serve                      # dev server → http://localhost:4000/al-folio/  (NOTE baseurl)
-bundle exec jekyll build --baseurl /al-folio  # production-style build to _site/
-bash test/integration_distill.sh              # run ONE integration test (any of the seven in test/)
-npm run test:visual:update                    # refresh playwright snapshots after intentional UI change
+bundle exec jekyll serve                      # dev server → http://localhost:4000/  (user page: baseurl is empty)
+bundle exec jekyll build                      # production-style build to _site/
+npm run lint:prettier                         # the only lint gate left in CI
 bundle exec al-folio upgrade apply --safe     # deterministic codemods (font-weight-* → font-*, remote→local URLs)
-bundle exec al-folio upgrade overrides diff <path>    # then `overrides accept <path>` to acknowledge an override
+bundle exec al-folio upgrade overrides diff _sass/_variables.scss   # then `overrides accept <path>` to acknowledge
 ```
+
+Note: the integration tests, visual-regression snapshots and the style contract were removed with the rest of the upstream starter scaffolding — see the banner at the top of `AGENTS.md`. CI is now `deploy.yml`, `prettier.yml`, `axe.yml`, `broken-links-site.yml`, `upgrade-check.yml`.
 
 ## Optional toolchains
 
@@ -29,19 +30,15 @@ bundle exec al-folio upgrade overrides diff <path>    # then `overrides accept <
 
 ## Docker serving model (v1-specific)
 
-`docker compose up -d` bind-mounts the repo to `/srv/jekyll` and runs `bin/entry_point.sh`, which serves with `--force_polling --destination /tmp/_site`. The build output deliberately goes to **container-local `/tmp/_site`, not the bind-mounted `_site`** — writing `_site` back across the host bind mount caused write deadlocks. The container also `inotifywait`s `_config.yml` and restarts Jekyll on change (config edits aren't hot-reloaded by `--watch`). Verify with the `/al-folio` baseurl: `curl -fsS http://127.0.0.1:8080/al-folio/`. `docker-compose-slim.yml` pulls a prebuilt `:slim` image instead of building locally.
+`docker compose up -d` bind-mounts the repo to `/srv/jekyll` and runs `bin/entry_point.sh`, which serves with `--force_polling --destination /tmp/_site`. The build output deliberately goes to **container-local `/tmp/_site`, not the bind-mounted `_site`** — writing `_site` back across the host bind mount caused write deadlocks. The container also `inotifywait`s `_config.yml` and restarts Jekyll on change (config edits aren't hot-reloaded by `--watch`). Verify with `curl -fsS http://127.0.0.1:8080/` (no baseurl on this site).
 
-## CI gates and the style contract
+## CI gates
 
-`npm run lint:style-contract` (`test/style_contract.js`) is the automated enforcement of the thin-starter boundary and will fail CI if you cross it. Beyond the forbidden paths listed in `AGENTS.md`, it also asserts that `_config.yml` keeps `theme: al_folio_core` and the required plugins, that the `third_party_libraries` SRI pins are present, and that the `al_math` Gemfile pin stays on a released version rather than a git branch.
-
-Other gates:
-
-- `unit-tests.yml` — style contract plus all seven `test/integration_*.sh` scripts (`comments`, `plugin_toggles`, `distill`, `bootstrap_compat`, `upgrade_cli`, `css_minify`, `new_plugins`).
-- `visual-regression.yml` — Playwright on chromium + webkit, diffing the candidate build against a `v0.16.3` baseline worktree served on `:4100` via `BASELINE_URL`.
-- `upgrade-check.yml` — `bundle exec al-folio upgrade audit`.
+- `deploy.yml` — `bundle exec jekyll build` + purgecss, then publishes `_site` to GitHub Pages on push to `main`. Also stamps `giscus.repo` into `_config.yml` at build time.
 - `prettier.yml` — Prettier with `@shopify/prettier-plugin-liquid` and `printWidth: 150`. Run `npm run lint:prettier` before pushing; `npx prettier . --write` fixes.
-- `update-tocs.yml` — regenerates `<!--ts-->…<!--te-->` blocks in changed root and `docs/` Markdown files. If you add or rename a heading, expect a follow-up auto-commit on `main`.
+- `upgrade-check.yml` — `bundle exec al-folio upgrade audit`.
+- `axe.yml` — accessibility scan. Relevant to the palette: the theme colour must clear 4.5:1 both as link text and behind `--global-hover-text-color`.
+- `broken-links-site.yml` — link checker over the built site.
 
 ## Gem version pins
 

@@ -1,0 +1,64 @@
+/*******************************************************************************
+ * Variables used throughout the theme.
+ * To adjust anything, simply edit the variables below and rebuild the theme.
+ *
+ * LOCAL OVERRIDE of al_folio_core's _sass/_variables.scss.
+ * Verbatim copy of the gem file except for the two Tiffany-blue lines flagged
+ * below. Re-check with `bundle exec al-folio upgrade overrides diff _sass/_variables.scss`
+ * after a gem update.
+ ******************************************************************************/
+
+@use "sass:color";
+
+// Colors
+$red-color: #ff3636 !default;
+$red-color-dark: #b71c1c !default;
+$orange-color: #f29105 !default;
+$blue-color: #0076df !default;
+$blue-color-dark: #00369f !default;
+// TIFFANY OVERRIDE: dark-mode --global-theme-color / --global-hover-color.
+// Bright enough to read as body text on #1c1c1d (9.8:1); the ink drawn on top of
+// it is switched to a dark teal in _themes.scss so filled pills stay legible.
+$cyan-color: #5fd9d3 !default;
+$light-cyan-color: color.adjust($cyan-color, $lightness: 25%);
+$green-color: #00ab37 !default;
+$green-color-lime: #b7d12a !default;
+$green-color-dark: #009f06 !default;
+$green-color-light: #ddffdd !default;
+$green-color-bright: #11d68b !default;
+// TIFFANY OVERRIDE: light-mode --global-theme-color / --global-hover-color, and
+// (via $code-bg-color-light below) the inline-code tint. Deepened from the brand
+// #0abab5 until it clears 7:1 (AAA) both as link text on white and as white text
+// on a filled pill. Going much darker than this stops reading as Tiffany at all.
+$purple-color: #08615e !default;
+$light-purple-color: color.adjust($purple-color, $lightness: 25%);
+$pink-color: #f92080 !default;
+$pink-color-light: #ffdddd !default;
+$yellow-color: #efcc00 !default;
+
+$grey-color: #828282 !default;
+$grey-color-light: color.adjust($grey-color, $lightness: 40%);
+$grey-color-dark: #1c1c1d;
+$grey-900: #212529;
+
+$white-color: #ffffff !default;
+$black-color: #000000 !default;
+
+// Theme colors
+
+$code-bg-color-light: rgba($purple-color, 0.05);
+$code-bg-color-dark: #2c3237 !default;
+
+// Font awesome location
+$fa-font-path: "../webfonts";
+
+// Back To Top button config
+$back-to-top-z-index: 10;
+$back-to-top-bottom: 30px;
+$back-to-top-right: 30px;
+$back-to-top-diameter: 40px;
+$back-to-top-height: $back-to-top-diameter;
+$back-to-top-width: $back-to-top-diameter;
+
+// Max width default
+$max-content-width: 930px !default;

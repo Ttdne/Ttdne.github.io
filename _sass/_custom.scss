@@ -1,0 +1,178 @@
+/*******************************************************************************
+ * Site-specific styles. This file is ours, not the gem's -- nothing upstream
+ * ships a `_custom.scss`, so it never drifts and never needs an overrides audit.
+ * It is loaded last by `assets/css/main.scss`, so it wins ties against the gem
+ * partials.
+ ******************************************************************************/
+
+/* ---------------------------------------------------------------------------
+ * Page header
+ * ------------------------------------------------------------------------ */
+
+/* The gem sets h1 to 2.5rem at font-weight 300. Bigger and slightly tighter so
+ * the name carries the page the way a masthead should. */
+.post-title {
+  font-size: 3rem;
+  letter-spacing: -0.015em;
+}
+
+@media (max-width: 576px) {
+  .post-title {
+    font-size: 2.25rem;
+  }
+}
+
+/* On the about page the first name sits in a `.font-weight-bold` span, so this
+ * only ever colours that one word -- "Duong (Joe)" Tiffany, "Trinh" in ink. */
+.post-title .font-weight-bold {
+  color: var(--global-theme-color);
+}
+
+/* Short accent bar under the title. Every page gets one, including the ones
+ * whose h1 has no coloured span (publications, projects, cv, blog). */
+.post-header .post-title::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 4px;
+  margin-top: 0.85rem;
+  border-radius: 2px;
+  background: var(--global-theme-color);
+}
+
+/* The subtitle line under the title -- 0.875rem in the gem, small enough to
+ * read as a caption rather than a standfirst. */
+.post-description {
+  font-size: 1rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Page background
+ * ------------------------------------------------------------------------ */
+
+/* A Tiffany wash behind the page, drawn in CSS rather than loaded as an image:
+ * no file to ship, no licence to clear, and it rescales to any viewport without
+ * tiling seams. `fixed` keeps it still while the content scrolls over it.
+ *
+ * To use a real photograph instead, drop the file in `assets/img/` and swap the
+ * gradients for:
+ *
+ *   background-image: url("/assets/img/your-background.jpg");
+ *   background-size: cover;
+ *   background-position: center;
+ *
+ * A rooted path is correct here because this site's baseurl is empty. Note that
+ * Sass partials are not run through Liquid -- only `assets/css/main.scss` has
+ * front matter -- so `{{ site.baseurl }}` would not be expanded in this file.
+ *
+ * Keep the `.container[role="main"]` card below when you do -- it is what stops
+ * a busy photograph from eating the body text. Only use an image you hold the
+ * rights to; stock previews carry watermarks and licence terms.
+ */
+body {
+  background-image:
+    radial-gradient(ellipse 90% 55% at 12% 0%, color-mix(in srgb, var(--global-theme-color) 16%, transparent), transparent 62%),
+    radial-gradient(ellipse 75% 50% at 88% 12%, color-mix(in srgb, #0abab5 13%, transparent), transparent 58%),
+    linear-gradient(180deg, color-mix(in srgb, #81d8d0 20%, transparent) 0%, transparent 42%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* The content column becomes an opaque card, so body text keeps its full
+ * contrast against white no matter what sits behind the page. */
+.container[role="main"] {
+  background: var(--global-bg-color);
+  border-radius: 14px;
+  padding: 2.25rem 2.5rem;
+  box-shadow:
+    0 1px 3px rgb(8 97 94 / 6%),
+    0 12px 32px rgb(8 97 94 / 7%);
+}
+
+@media (max-width: 576px) {
+  .container[role="main"] {
+    border-radius: 10px;
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Navbar
+ * ------------------------------------------------------------------------ */
+
+/* The gem leaves .nav-link at the inherited body size and .navbar-brand at
+ * 1.25rem, which reads small next to a 3rem page title. */
+.navbar.navbar-light {
+  .navbar-nav .nav-item .nav-link {
+    font-size: 1.15rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.45rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Tiffany accents in the body
+ * ------------------------------------------------------------------------ */
+
+/* Section headings: "news", "latest posts", "selected papers" on the about
+ * page, the category headings on /projects/, and the year headings on
+ * /publications/. The gem paints every heading with --global-text-color at
+ * element specificity, so `.post h2` is enough to win. */
+.post h2 {
+  color: var(--global-theme-color);
+}
+
+/* The gem sets every heading to font-weight 300. This opts one heading back to
+ * bold, via the kramdown IAL (`{: .section-title-bold}`) in `_pages/about.md`.
+ * To bold every section heading instead, move the weight up into `.post h2`
+ * above and drop this rule along with the IAL. */
+.post h2.section-title-bold {
+  font-weight: 700;
+}
+
+/* Label column of the two-column tables on the about page: dates in the news
+ * section, language names in the languages section. `.languages` reuses the
+ * news markup on purpose, so the two blocks read as siblings. */
+.news table th,
+.languages table th {
+  color: var(--global-theme-color);
+  font-weight: 600;
+}
+
+/* The Languages block on the CV page, which al_folio_cv renders with its own
+ * markup. Tinting the name only, to match the about page. */
+.language-item strong {
+  color: var(--global-theme-color);
+  font-weight: 700;
+}
+
+/* Dividers, tinted rather than grey. */
+hr {
+  border-top-color: color-mix(in srgb, var(--global-theme-color) 35%, transparent);
+}
+
+/* Pull quotes. The gem already gives them a Tiffany left border; this adds the
+ * matching wash behind it. Scoped away from the tip/warning/danger variants,
+ * which carry their own colours. */
+blockquote:not([class*="block-"]) {
+  background: color-mix(in srgb, var(--global-theme-color) 6%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Links
+ * ------------------------------------------------------------------------ */
+
+/* Bold links inside page content.
+ *
+ * Scoped to `.post`, which is the wrapper every content layout uses (about,
+ * page, post, cv, archive). The navbar, the footer and the scroll progress bar
+ * sit outside it and stay at their normal weight.
+ *
+ * Roboto is loaded at 300/400/500/700, so 600 resolves to 700 in practice; it is
+ * written as 600 so the site picks up a true semibold if the font ever ships one.
+ */
+.post a {
+  font-weight: 600;
+}
