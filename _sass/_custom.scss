@@ -176,3 +176,16 @@ blockquote:not([class*="block-"]) {
 .post a {
   font-weight: 600;
 }
+
+/* ---------------------------------------------------------------------------
+ * News
+ * ------------------------------------------------------------------------ */
+
+/* The gem caps the news list at an inline `max-height: 60vw`, which on a wide
+ * screen is taller than the list, so the scrollbar never shows. A fixed height
+ * keeps the block compact and scrolls the older items. `!important` is needed
+ * to beat the inline style. */
+.news .table-responsive {
+  max-height: 420px !important;
+  overflow-y: auto;
+}
